@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Numerics;
 
 using U8.Abstractions;
 using U8.Primitives;
@@ -8,7 +9,7 @@ using U8.Shared;
 namespace U8;
 
 #pragma warning disable RCS1003 // Add braces. Why: manual codegen tuning.
-public readonly partial struct U8String
+public readonly partial struct U8String : IComparisonOperators<U8String, U8String, bool>
 {
     /// <summary>
     /// Compares two <see cref="U8String"/> instances lexicographically.
@@ -365,4 +366,12 @@ public readonly partial struct U8String
     {
         return comparer.GetHashCode(value);
     }
+
+    public static bool operator >(U8String left, U8String right) => left.CompareTo(right) > 0;
+
+    public static bool operator >=(U8String left, U8String right) => left.CompareTo(right) >= 0;
+
+    public static bool operator <(U8String left, U8String right) => left.CompareTo(right) < 0;
+
+    public static bool operator <=(U8String left, U8String right) => left.CompareTo(right) <= 0;
 }
